@@ -1,8 +1,9 @@
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../constants";
+import CustomButton from "../components/CustomButton";
 
 export default function Page() {
   return (
@@ -30,10 +31,19 @@ export default function Page() {
             />
           </View>
           <Text className="text-sm font-pregular text-gray-100 mt-7 text-center">
-            Save your memory here !
+            Save your memory here hihi !
           </Text>
+
+          <CustomButton
+            title={"Continue with Email"}
+            handlePress={() => {
+              router.push("/sign-in");
+            }}
+            containerStyles={"w-full mt-7"}
+          />
         </View>
       </ScrollView>
+      <StatusBar backgroundColor="#161622" style="light" />
     </SafeAreaView>
   );
 }
