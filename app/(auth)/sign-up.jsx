@@ -1,10 +1,12 @@
-import { View, Text, ScrollView, Image } from "react-native";
+import {View, Text, ScrollView, Image, Alert} from "react-native";
 import React, {useState} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../../constants";
 import {FormField} from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
-import {Link} from "expo-router";
+import {Link, router} from "expo-router";
+import {createUserAction} from "../../lib/appwrite";
+import {useGlobalContext} from "../../context/GlobalProvider";
 
 const SignUp = () => {
     const [form, setForm] = useState({
@@ -13,13 +15,28 @@ const SignUp = () => {
         password: ''
     })
     const [isSubmitting, setIsSubmitting] = useState(false)
-    const handleLogin = () => {
-        setIsSubmitting(true)
-        // Simulate login request
-        setTimeout(() => {
+    const {setUser, setIsLogged} = useGlobalContext();
+
+    const handleRegister = async () => {
+        if (form.username === '' || form.password === '' || form.email === '') {
+            Alert.alert('Error', 'Please enter a username and password');
+        }
+        setIsSubmitting(true);
+        try {
+            const result = await createUserAction(
+                form.email,
+                form.password,
+                form.username
+            );
+            setUser(result)
+            setIsLogged(true)
+            Alert.alert("Success", "Registration successfully");
+            router.replace('/home')
+        } catch (e) {
+            Alert.alert('handleRegister Loi roi: ', e.message)
+        } finally {
             setIsSubmitting(false)
-            // Redirect to home page or show success message
-        }, 2000)
+        }
     }
     return (
         <SafeAreaView className={"bg-primary h-full"}>
@@ -61,8 +78,8 @@ const SignUp = () => {
                         otherStyles='mt-7 '
                     />
                     <CustomButton
-                        title={'Sing In'}
-                        handlePress={handleLogin}
+                        title={'Sing Up'}
+                        handlePress={handleRegister}
                         containerStyles={"mt-7"}
                         isLoading={isSubmitting}
                     />
