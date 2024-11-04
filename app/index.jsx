@@ -1,14 +1,14 @@
-import { Redirect, router} from "expo-router";
+import { Redirect, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../constants";
 import CustomButton from "../components/CustomButton";
-import {useGlobalContext} from "../context/GlobalProvider";
+import { useGlobalContext } from "../context/GlobalProvider";
 
 export default function Page() {
-  const {isLoading, isLoggedIn} = useGlobalContext();
-  if(!isLoading && isLoggedIn)  return <Redirect href={'/home'}/>
+  const { isLoading, isLogged } = useGlobalContext();
+  if (!isLoading && isLogged) return <Redirect href={"/home"} />;
 
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -35,7 +35,7 @@ export default function Page() {
             />
           </View>
           <Text className="text-sm font-pregular text-gray-100 mt-7 text-center">
-            Save your memory here hihi !
+            Save your memory here !
           </Text>
 
           <CustomButton
