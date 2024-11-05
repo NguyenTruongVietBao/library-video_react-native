@@ -37,7 +37,7 @@ const Home = () => {
                                     Welcome
                                 </Text>
                                 <Text className="text-2xl font-psemibold text-white">
-                                    Hi Bro
+                                    Hi {user?.username}
                                 </Text>
                             </View>
                             <View>

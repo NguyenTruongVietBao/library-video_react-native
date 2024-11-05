@@ -1,15 +1,15 @@
-import {View, Text, ScrollView, Image, Alert, Button} from "react-native";
-import React, {useEffect, useState} from "react";
+import {View, Text, ScrollView, Image, Alert} from "react-native";
+import React, { useState} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../../constants";
 import {FormField} from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import {Link, router} from "expo-router";
-import {getCurrentUser, signInAction, signOutAction} from "../../lib/appwrite";
+import {getCurrentUser, signInAction} from "../../lib/appwrite";
 import {useGlobalContext} from "../../context/GlobalProvider";
 
 const SingIn = () => {
-  const {setUser, setIsLogged, isLogged} = useGlobalContext();
+  const {setUser, setIsLogged } = useGlobalContext();
 
   const [form, setForm] = useState({
       email: '',
@@ -29,23 +29,11 @@ const SingIn = () => {
       setIsLogged(true);
       router.replace("/home")
     } catch (e) {
-      Alert.alert('handleLogin Loi roi: ', e.message);
+      Alert.alert('Error login: ', e.message);
     } finally {
       setIsSubmitting(false);
     }
   }
-  const handleLogout = async () => {
-    try {
-      await signOutAction(); // Call the logout function
-      setIsLogged(false); // Update global state
-      setUser(null); // Clear user data
-      Alert.alert('Success', 'Logout successfully');
-      router.replace('/sign-in');
-    } catch (error) {
-      console.error('Logout error: ', error);
-      Alert.alert('Error', 'An error occurred while logging out.');
-    }
-  };
   return (
     <SafeAreaView className={"bg-primary h-full"}>
       <ScrollView>
@@ -89,7 +77,6 @@ const SingIn = () => {
             <Text className={'text-lg text-gray-100 font-pregular'}>Don't have any account ?</Text>
             <Link href={'/sign-up'} className={'text-lg font-psemibold text-secondary'}>Sign Up</Link>
           </View>
-          <Button title="Logout" className="bg-primary text-black p-10" onPress={handleLogout} />
         </View>
       </ScrollView>
     </SafeAreaView>

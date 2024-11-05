@@ -13,7 +13,7 @@ export const FormField = ({
             </Text>
             <View className={'w-full h-16 px-4 bg-black-200 border-red-500 rounded-2xl focus:border-secondary items-center flex-row'}>
                 <TextInput
-                    className={'flex-1 text-white font-psemibold text-base'}
+                    className="text-white font-psemibold text-base flex-1 "
                     value={value}
                     placeholder={placeholder}
                     placeholderTextColor={'#7b7b8b'}
